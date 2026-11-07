@@ -1,6 +1,10 @@
 # Code Hero
 
-A neon, rhythm-game-style typing game. Programming keywords from **C#, TypeScript, JavaScript, HTML, CSS, Go and Python** race down a synthwave highway. Type each one before it reaches the strike line, and lightning hits it.
+A neon, rhythm game-style typing game. Programming keywords from **C#, TypeScript, JavaScript, HTML, CSS, Go and Python** race down a synthwave highway. Type each one before it reaches the strike line, and lightning hits it.
+
+<img width="1750" height="1065" alt="image" src="https://github.com/user-attachments/assets/6a49fbf5-57be-4217-9e22-71f76d085de6" />
+
+<img width="1523" height="827" alt="image" src="https://github.com/user-attachments/assets/848cdafb-e41c-43e8-b504-bd567007dd4e" />
 
 ## How to play
 
