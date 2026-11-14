@@ -1,11 +1,6 @@
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vitest/config';
 
-/**
- * Security headers for `vite preview` (production build). Mirror these on
- * whichever host serves `dist/`. Everything is self-hosted: no third-party
- * scripts, fonts or network calls.
- */
 const securityHeaders = {
   'Content-Security-Policy': [
     "default-src 'self'",
@@ -30,7 +25,6 @@ export default defineConfig({
   plugins: [react()],
   build: {
     target: 'es2023',
-    // Emit fonts as files rather than data: URIs so the strict font-src CSP holds.
     assetsInlineLimit: (file) => (/\.woff2?$/.test(file) ? false : undefined),
     chunkSizeWarningLimit: 2000, // Phaser itself is ~1.2 MB minified
     rollupOptions: {

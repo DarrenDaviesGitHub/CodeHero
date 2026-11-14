@@ -6,10 +6,6 @@ export type Rng = () => number;
 const RECENT_LIMIT = 15;
 const MIN_POOL = 6;
 
-/**
- * Picks keywords suited to the current level, avoiding recent repeats and
- * first letters already on screen (so the first key press is never ambiguous).
- */
 export class WordPicker {
   private readonly recent: string[] = [];
   private readonly languages: ReadonlySet<Language>;

@@ -3,11 +3,8 @@ export const MAX_LIVES = 5;
 
 export interface LevelConfig {
   readonly level: number;
-  /** Seconds a keyword takes to travel from the horizon to the strike line. */
   readonly fallSeconds: number;
-  /** Seconds between keyword spawns. */
   readonly spawnSeconds: number;
-  /** Maximum keywords on screen at once. */
   readonly maxWords: number;
   readonly minDifficulty: number;
   readonly maxDifficulty: number;

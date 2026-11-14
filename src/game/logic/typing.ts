@@ -1,9 +1,7 @@
 export interface TypableWord {
   readonly id: number;
   readonly text: string;
-  /** Number of characters typed correctly so far. */
   typed: number;
-  /** 0 at the horizon, 1 at the strike line — used to prioritise targets. */
   progress: number;
 }
 
@@ -14,10 +12,6 @@ export type KeyResult =
 
 const same = (a: string, b: string) => a.toLowerCase() === b.toLowerCase();
 
-/**
- * Pure typing state machine. The first key locks on to the matching keyword
- * closest to the strike line; following keys must continue that keyword.
- */
 export class TypingEngine {
   private target: TypableWord | null = null;
 
@@ -48,7 +42,6 @@ export class TypingEngine {
     return { kind: 'progress', word };
   }
 
-  /** Abandons the current target (Backspace), resetting its progress. */
   release(): TypableWord | null {
     const word = this.target;
     if (word) word.typed = 0;
@@ -56,7 +49,6 @@ export class TypingEngine {
     return word;
   }
 
-  /** Call when a word leaves play so a stale target is never kept. */
   forget(id: number): void {
     if (this.target?.id === id) this.target = null;
   }

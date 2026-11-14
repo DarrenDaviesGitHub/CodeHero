@@ -5,9 +5,7 @@ export type Language = (typeof LANGUAGES)[number];
 export interface LanguageInfo {
   readonly id: Language;
   readonly label: string;
-  /** Short badge shown next to each falling keyword. */
   readonly badge: string;
-  /** Neon colour used for the badge, glow and lightning. */
   readonly color: number;
   readonly css: string;
 }
@@ -87,10 +85,6 @@ export interface Keyword {
   readonly difficulty: number;
 }
 
-/**
- * Rough typing difficulty: longer words and words containing symbols
- * (which usually need Shift or a stretch) are harder.
- */
 export function difficultyOf(text: string): number {
   const symbols = text.replace(/[a-z0-9]/gi, '').length;
   return text.length + symbols * 2;

@@ -5,7 +5,6 @@ export const prefersReducedMotion = (): boolean =>
 
 type Pt = { x: number; y: number };
 
-/** Midpoint-displacement lightning path. */
 function boltPath(a: Pt, b: Pt, displacement: number, detail = 6): Pt[] {
   if (displacement < detail) return [a, b];
   const mid = {
@@ -41,7 +40,6 @@ function drawBolt(g: Phaser.GameObjects.Graphics, from: Pt, to: Pt, color: numbe
   }
 }
 
-/** A flickering lightning strike from the sky down to (x, y). */
 export function strikeLightning(scene: Phaser.Scene, x: number, y: number, color: number): void {
   const g = scene.add.graphics().setDepth(60).setBlendMode(Phaser.BlendModes.ADD);
   const from = { x: x + (Math.random() - 0.5) * 260, y: -20 };
@@ -57,7 +55,6 @@ export function strikeLightning(scene: Phaser.Scene, x: number, y: number, color
   });
   scene.tweens.add({ targets: g, alpha: 0, delay: 140, duration: 260, onComplete: () => g.destroy() });
 
-  // Sky glow at the impact point.
   const glow = scene.add.image(x, y, 'glow').setDepth(59).setBlendMode(Phaser.BlendModes.ADD).setTint(color).setScale(2.5);
   scene.tweens.add({ targets: glow, alpha: 0, scale: 5, duration: 450, onComplete: () => glow.destroy() });
 }
@@ -120,11 +117,9 @@ export function floatingText(
   });
 }
 
-/** Generates the small procedural textures used by particles and glows. */
 export function createTextures(scene: Phaser.Scene): void {
   const g = scene.make.graphics({}, false);
 
-  // Soft round spark.
   for (let r = 16; r > 0; r--) {
     g.fillStyle(0xffffff, (1 - r / 16) ** 1.6);
     g.fillCircle(16, 16, r);
@@ -132,7 +127,6 @@ export function createTextures(scene: Phaser.Scene): void {
   g.generateTexture('spark', 32, 32);
   g.clear();
 
-  // Large soft glow.
   for (let r = 64; r > 0; r -= 2) {
     g.fillStyle(0xffffff, 0.04 * (1 - r / 64) + 0.005);
     g.fillCircle(64, 64, r);

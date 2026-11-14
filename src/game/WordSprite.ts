@@ -7,7 +7,6 @@ const BASE_COLOR = '#d9d4ff';
 const TYPED_COLOR = '#ffe14d';
 const HEIGHT = 44;
 
-/** A falling keyword: a neon pill with a language badge and per-letter highlighting. */
 export class WordSprite extends Phaser.GameObjects.Container implements TypableWord {
   readonly id: number;
   readonly text: string;
@@ -16,7 +15,6 @@ export class WordSprite extends Phaser.GameObjects.Container implements TypableW
   readonly color: number;
   typed = 0;
   progress = 0;
-  /** Horizontal shake offset, tweened on a wrong key. */
   shake = 0;
 
   private readonly bg: Phaser.GameObjects.Graphics;
@@ -82,19 +80,16 @@ export class WordSprite extends Phaser.GameObjects.Container implements TypableW
     const top = -HEIGHT / 2;
     const stroke = flashColor ?? (this.targeted ? 0xffffff : this.color);
     g.clear();
-    // Outer glow.
     g.lineStyle(this.targeted ? 12 : 8, flashColor ?? this.color, this.targeted ? 0.35 : 0.2);
     g.strokeRoundedRect(left, top, w, HEIGHT, HEIGHT / 2);
     g.fillStyle(0x0d0424, 0.9);
     g.fillRoundedRect(left, top, w, HEIGHT, HEIGHT / 2);
     g.lineStyle(this.targeted ? 3 : 2, stroke, 1);
     g.strokeRoundedRect(left, top, w, HEIGHT, HEIGHT / 2);
-    // Badge.
     g.fillStyle(this.color, 1);
     g.fillRoundedRect(left + 8, top + 8, this.badgeWidth + 4, HEIGHT - 16, (HEIGHT - 16) / 2);
   }
 
-  /** Refreshes highlighted letters and the cursor after typing changes. */
   refresh(): void {
     const targeted = this.typed > 0;
     if (targeted !== this.targeted) {
@@ -106,7 +101,6 @@ export class WordSprite extends Phaser.GameObjects.Container implements TypableW
     this.cursor.setX(this.textX + this.typed * this.charWidth + 1);
   }
 
-  /** Red flash and shake for a wrong key. */
   flashWrong(): void {
     this.drawPill(0xff2a4d);
     this.scene.tweens.add({

@@ -1,11 +1,5 @@
-/**
- * All sound is synthesised with the Web Audio API — no audio assets to load.
- * The context is only created after a user gesture, as browsers require.
- */
-
-// Minor pentatonic in A, spread over two octaves: every letter sounds "right".
 const SCALE = [0, 3, 5, 7, 10, 12, 15, 17, 19, 22, 24];
-const BASS_LINE = [45, 45, 48, 48, 43, 43, 40, 43]; // MIDI notes, one per bar half
+const BASS_LINE = [45, 45, 48, 48, 43, 43, 40, 43];
 const midiToHz = (m: number) => 440 * 2 ** ((m - 69) / 12);
 
 class SynthAudio {
@@ -23,7 +17,6 @@ class SynthAudio {
     return this._muted;
   }
 
-  /** Must be called from a user gesture (key press). */
   unlock(): void {
     if (!this.ctx) {
       const Ctor = window.AudioContext;
@@ -84,7 +77,6 @@ class SynthAudio {
     src.stop(start + dur + 0.02);
   }
 
-  /** Short blip whose pitch climbs as the keyword is typed. */
   key(index: number): void {
     if (!this.ctx) return;
     const note = 69 + SCALE[Math.min(index, SCALE.length - 1)];
@@ -96,7 +88,6 @@ class SynthAudio {
     this.tone(110, this.ctx.currentTime, 0.14, 'sawtooth', 0.18, undefined, 70);
   }
 
-  /** Thunder-crack for a completed keyword. */
   zap(length: number): void {
     if (!this.ctx) return;
     const t = this.ctx.currentTime;
@@ -124,8 +115,6 @@ class SynthAudio {
     [12, 7, 3, 0, -5].forEach((s, i) => this.tone(midiToHz(57 + s), t + i * 0.18, 0.5, 'sawtooth', 0.16));
   }
 
-  // ---- Background beat (lookahead scheduler) ----
-
   startMusic(tempo?: number): void {
     if (!this.ctx) return;
     if (tempo !== undefined) this.tempo = tempo;
@@ -151,9 +140,9 @@ class SynthAudio {
       const t = this.nextBeatTime;
       const step = this.beat % 16;
       const bar = Math.floor(this.beat / 16);
-      if (step % 4 === 0) this.tone(150, t, 0.25, 'sine', 0.9, this.musicGain, 45); // kick
-      if (step === 4 || step === 12) this.noiseBurst(t, 0.18, 0.35, 1800, 'bandpass', this.musicGain); // snare
-      if (step % 2 === 1) this.noiseBurst(t, 0.05, 0.18, 8000, 'highpass', this.musicGain); // hat
+      if (step % 4 === 0) this.tone(150, t, 0.25, 'sine', 0.9, this.musicGain, 45);
+      if (step === 4 || step === 12) this.noiseBurst(t, 0.18, 0.35, 1800, 'bandpass', this.musicGain);
+      if (step % 2 === 1) this.noiseBurst(t, 0.05, 0.18, 8000, 'highpass', this.musicGain);
       if (step % 2 === 0) {
         const root = BASS_LINE[(bar * 2 + Math.floor(step / 8)) % BASS_LINE.length];
         const octave = step % 4 === 2 ? 12 : 0;

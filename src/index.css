@@ -49,8 +49,6 @@ body,
   pointer-events: auto;
 }
 
-/* ---------- Screens ---------- */
-
 .screen {
   position: absolute;
   inset: 0;
@@ -78,8 +76,6 @@ body,
     opacity: 0;
   }
 }
-
-/* ---------- Logo ---------- */
 
 .logo {
   display: flex;
@@ -114,7 +110,6 @@ body,
   animation-delay: 0.4s !important;
 }
 
-/* Glitch slices */
 .logo span::before,
 .logo span::after {
   content: attr(data-text);
@@ -205,8 +200,6 @@ body,
   }
 }
 
-/* ---------- Panel & chips ---------- */
-
 .panel {
   animation: fade-in 0.8s 0.8s both;
 }
@@ -282,8 +275,6 @@ body,
   background: rgba(255, 255, 255, 0.06);
 }
 
-/* ---------- Start button ---------- */
-
 .start {
   margin-top: 0.4rem;
   padding: 0.9rem 2.2rem;
@@ -338,8 +329,6 @@ body,
   letter-spacing: 0.2em;
   text-shadow: 0 0 10px rgba(255, 225, 77, 0.6);
 }
-
-/* ---------- HUD ---------- */
 
 .hud {
   position: absolute;
@@ -466,8 +455,6 @@ body,
   stroke-width: 1.5;
   transform: scale(0.85);
 }
-
-/* ---------- Pause / Game over ---------- */
 
 .title {
   margin: 0;

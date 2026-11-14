@@ -21,7 +21,6 @@ export function multiplierFor(combo: number): number {
   return 1;
 }
 
-/** Score, lives, combo and level bookkeeping — no rendering, fully testable. */
 export class GameSession {
   score = 0;
   lives = MAX_LIVES;

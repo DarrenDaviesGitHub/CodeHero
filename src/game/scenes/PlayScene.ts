@@ -76,8 +76,6 @@ export class PlayScene extends Phaser.Scene {
     gameBus.emit('ready');
   }
 
-  // ---------------------------------------------------------------- modes
-
   private clearWords(): void {
     for (const w of this.words) w.destroy();
     this.words = [];
@@ -133,8 +131,6 @@ export class PlayScene extends Phaser.Scene {
     gameBus.emit('hud', this.session.snapshot());
   }
 
-  // ---------------------------------------------------------------- input
-
   private onKeyDown(event: KeyboardEvent): void {
     if (this.mode !== 'playing' || event.repeat || event.ctrlKey || event.metaKey || event.altKey) return;
 
@@ -147,7 +143,7 @@ export class PlayScene extends Phaser.Scene {
       if (event.key === ' ') event.preventDefault();
       return;
     }
-    // Stop Firefox quick-find and similar browser shortcuts while typing.
+    
     event.preventDefault();
     this.typeChar(event.key);
   }
@@ -181,8 +177,6 @@ export class PlayScene extends Phaser.Scene {
       }
     }
   }
-
-  // ---------------------------------------------------------------- word lifecycle
 
   private completeWord(w: WordSprite): void {
     w.refresh();
@@ -244,7 +238,6 @@ export class PlayScene extends Phaser.Scene {
   }
 
   private spawnWord(): boolean {
-    // Keep lanes near the top clear so new words never overlap.
     const busy = new Set<number>();
     for (const w of this.words) {
       if (w.progress < 0.28) for (const l of [w.lane - 1, w.lane, w.lane + 1]) busy.add(l);
@@ -269,8 +262,6 @@ export class PlayScene extends Phaser.Scene {
     w.setAlpha(Math.min(1, w.progress * 12));
     w.setDepth(10 + w.progress);
   }
-
-  // ---------------------------------------------------------------- loop
 
   update(_time: number, deltaMs: number): void {
     const dt = Math.min(deltaMs, 100) / 1000;
@@ -305,7 +296,6 @@ export class PlayScene extends Phaser.Scene {
     this.drawStrikeLine();
   }
 
-  /** In the intro, an invisible "hero" types keywords to show off the effects. */
   private runGhostTypist(dt: number): void {
     this.ghostTimer -= dt;
     if (this.ghostTimer > 0) return;
@@ -324,8 +314,6 @@ export class PlayScene extends Phaser.Scene {
       this.ghostTimer += 0.25;
     }
   }
-
-  // ---------------------------------------------------------------- visuals
 
   private showBanner(title: string, subtitle: string): void {
     const big = this.add
@@ -371,14 +359,11 @@ export class PlayScene extends Phaser.Scene {
 
   private drawBackdrop(): void {
     const g = this.add.graphics().setDepth(0);
-    // Sky.
     g.fillGradientStyle(0x080120, 0x080120, 0x3a0a5e, 0x3a0a5e, 1);
     g.fillRect(0, 0, GAME_WIDTH, HORIZON_Y);
-    // Ground.
     g.fillGradientStyle(0x14032e, 0x14032e, 0x05010f, 0x05010f, 1);
     g.fillRect(0, HORIZON_Y, GAME_WIDTH, GAME_HEIGHT - HORIZON_Y);
 
-    // Striped synthwave sun sinking into the horizon.
     const sun = this.add.graphics().setDepth(1);
     const r = 120;
     const cy = HORIZON_Y - 8;
@@ -400,7 +385,6 @@ export class PlayScene extends Phaser.Scene {
     const sunGlow = this.add.image(CX, cy, 'glow').setDepth(0).setBlendMode(Phaser.BlendModes.ADD).setTint(0xff2a8a).setScale(4.5).setAlpha(0.8);
     this.tweens.add({ targets: sunGlow, alpha: 0.5, duration: 2200, yoyo: true, repeat: -1, ease: 'Sine.easeInOut' });
 
-    // Twinkling stars.
     for (let i = 0; i < 90; i++) {
       const star = this.add
         .image(Math.random() * GAME_WIDTH, Math.random() * (HORIZON_Y - 10), 'star')
@@ -417,7 +401,6 @@ export class PlayScene extends Phaser.Scene {
       });
     }
 
-    // Static highway body and lane rails.
     const hw = this.add.graphics().setDepth(1);
     const bottomW = widthAt(GAME_HEIGHT);
     hw.fillStyle(0x0a0220, 0.92);
@@ -444,7 +427,6 @@ export class PlayScene extends Phaser.Scene {
     hw.lineStyle(10, 0xff3df0, 0.2).lineBetween(0, HORIZON_Y, GAME_WIDTH, HORIZON_Y);
   }
 
-  /** Scrolling perspective grid on the ground and frets on the highway. */
   private drawGrid(): void {
     const g = this.grid;
     g.clear();
@@ -461,7 +443,7 @@ export class PlayScene extends Phaser.Scene {
       g.lineStyle(2 + z * 2, 0xb15cff, alpha);
       g.lineBetween(CX - w / 2, y, CX + w / 2, y);
     }
-    // Ground grid verticals converging on the vanishing point.
+
     for (let i = -10; i <= 10; i++) {
       const x2 = CX + i * 170;
       g.lineStyle(1, 0x2ad4ff, 0.18);

@@ -2,7 +2,6 @@ import * as Phaser from 'phaser';
 import { BootScene } from './scenes/BootScene';
 import { GAME_HEIGHT, GAME_WIDTH, PlayScene } from './scenes/PlayScene';
 
-/** Ensures bundled web fonts are ready before Phaser rasterises any text. */
 async function loadFonts(): Promise<void> {
   if (!document.fonts) return;
   await Promise.allSettled([
@@ -26,7 +25,7 @@ export async function createGame(parent: HTMLElement): Promise<Phaser.Game> {
     },
     render: { antialias: true },
     banner: false,
-    audio: { noAudio: true }, // all sound is synthesised in audio.ts
+    audio: { noAudio: true },
     scene: [BootScene, PlayScene],
   });
 }

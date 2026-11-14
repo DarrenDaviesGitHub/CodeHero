@@ -1,6 +1,5 @@
 import { LANGUAGES, type Language } from '../game/logic/keywords';
 
-// Browser storage may be unavailable (private mode, blocked site data) — never let that break the game.
 function read(key: string): string | null {
   try {
     return window.localStorage.getItem(key);
@@ -12,9 +11,7 @@ function read(key: string): string | null {
 function write(key: string, value: string): void {
   try {
     window.localStorage.setItem(key, value);
-  } catch {
-    /* ignore */
-  }
+  } catch { }
 }
 
 const HIGH_SCORE_KEY = 'code-hero:high-score';
@@ -37,9 +34,7 @@ export function loadLanguages(): Language[] {
       const valid = LANGUAGES.filter((l) => parsed.includes(l));
       if (valid.length > 0) return valid;
     }
-  } catch {
-    /* fall through to default */
-  }
+  } catch { }
   return [...LANGUAGES];
 }
 

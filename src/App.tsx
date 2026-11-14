@@ -29,7 +29,6 @@ export default function App() {
 
   useEffect(() => saveLanguages(languages), [languages]);
 
-  // Events coming from the Phaser scene.
   useEffect(() => {
     const offs = [
       gameBus.on('ready', () => setReady(true)),
@@ -68,7 +67,6 @@ export default function App() {
     setLanguages((cur) => (cur.includes(lang) ? cur.filter((l) => l !== lang) : LANGUAGES.filter((l) => l === lang || cur.includes(l))));
   }, []);
 
-  // Keyboard controls for menus. Typing during play is handled by Phaser.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.repeat || e.ctrlKey || e.metaKey || e.altKey) return;

@@ -9,14 +9,11 @@ export interface GameOverSummary extends SessionSnapshot {
   readonly durationSeconds: number;
 }
 
-/** Events flowing between the React UI and the Phaser scene. */
 export interface GameEvents {
-  // React -> Phaser
   start: StartOptions;
   pause: void;
   resume: void;
   quit: void;
-  // Phaser -> React
   ready: void;
   hud: SessionSnapshot;
   levelUp: number;
